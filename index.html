@@ -663,96 +663,94 @@
 
 
             /* CONTENEDOR VERTICAL DEL SOBRE */
-        .contenido-sobre-interactivo {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -45%);
-            width: 90%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 4;
-            pointer-events: none;
-        }
-        
-        .etiqueta-para {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--verde-oliva-oscuro);
-            margin: 0 0 6px 0;
-            opacity: 0.85;
-        }
-        
-        /* SELLO DE CERA */
-        .sello-cera {
-            position: relative; /* Cambiado de absolute a relative */
-            width: 55px;
-            height: 55px;
-            background: radial-gradient(circle, #506138 0%, #2D3921 100%);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #FAF8F2;
-            font-family: 'Great Vibes', cursive;
-            font-size: 28px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), inset 0 0 5px rgba(255, 255, 255, 0.3);
-            margin: 4px 0 8px 0;
-            transition: transform 0.5s ease;
-        }
-        
-        #nombreFamiliaSobre {
-            font-family: 'Great Vibes', cursive;
-            font-size: 26px;
-            color: var(--verde-oliva-oscuro);
-            margin: 2px 0 0 0;
-            font-weight: normal;
-            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
-        }
-        
-        .texto-pases {
-            font-size: 12px;
-            color: var(--verde-oliva);
-            margin: 2px 0 0 0;
-            font-weight: bold;
-        }
-        
-        /* Ocultar contenido al abrir */
-        .contenedor-sobre.abierto .sello-cera,
-        .contenedor-sobre.abierto .contenido-sobre-interactivo {
-            opacity: 0;
-            transition: opacity 0.4s ease;
+.contenido-sobre-interactivo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 4;
+    pointer-events: none;
 }
 
+.etiqueta-para {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--verde-oliva-oscuro);
+    margin: 0 0 6px 0;
+    opacity: 0.85;
+}
+
+/* SELLO DE CERA */
+.sello-cera {
+    position: relative; /* Cambiado de absolute a relative */
+    width: 55px;
+    height: 55px;
+    background: radial-gradient(circle, #506138 0%, #2D3921 100%);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FAF8F2;
+    font-family: 'Great Vibes', cursive;
+    font-size: 28px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), inset 0 0 5px rgba(255, 255, 255, 0.3);
+    margin: 4px 0 8px 0;
+    transition: transform 0.5s ease;
+}
+
+#nombreFamiliaSobre {
+    font-family: 'Great Vibes', cursive;
+    font-size: 26px;
+    color: var(--verde-oliva-oscuro);
+    margin: 2px 0 0 0;
+    font-weight: normal;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+.texto-pases {
+    font-size: 12px;
+    color: var(--verde-oliva);
+    margin: 2px 0 0 0;
+    font-weight: bold;
+}
+
+/* Ocultar contenido al abrir */
+.contenedor-sobre.abierto .sello-cera,
+.contenedor-sobre.abierto .contenido-sobre-interactivo {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
     </style>
 </head>
 <body class="sobre-cerrado">
 
     <!-- PANTALLA SOBRE INTERACTIVO -->
-    <div id="pantalla-sobre">
-        <div class="contenedor-sobre" onclick="abrirInvitacion()">
-            <div class="solapa-sobre"></div>
-            <div class="cuerpo-sobre"></div>
+<div id="pantalla-sobre">
+    <div class="contenedor-sobre" onclick="abrirInvitacion()">
+        <div class="solapa-sobre"></div>
+        <div class="cuerpo-sobre"></div>
+        
+        <!-- CONTENIDO DEL SOBRE EN ORDEN VERTICAL -->
+        <div class="contenido-sobre-interactivo">
+            <p class="etiqueta-para">Invitación especial para:</p>
             
-            <!-- CONTENIDO DEL SOBRE EN ORDEN VERTICAL -->
-            <div class="contenido-sobre-interactivo">
-                <p class="etiqueta-para">Invitación especial para:</p>
-                
-                <!-- Círculo con la letra T en cursiva -->
-                <div class="sello-cera">T</div>
-                
-                <!-- Nombre de la familia y pases -->
-                <h3 id="nombreFamiliaSobre">Familia Invitada</h3>
-                <p id="pasesAsignadosSobre" class="texto-pases">4 pases reservados</p>
-            </div>
-    
-            <div class="texto-abrir">✨ Toca para abrir ✨</div>
+            <!-- Círculo con la letra T en cursiva -->
+            <div class="sello-cera">T</div>
+            
+            <!-- Nombre de la familia y pases -->
+            <h3 id="nombreFamiliaSobre">Familia Invitada</h3>
+            <p id="pasesAsignadosSobre" class="texto-pases">4 pases reservados</p>
         </div>
-    </div>
 
+        <div class="texto-abrir">✨ Toca para abrir ✨</div>
+    </div>
+</div>
 
     <!-- AUDIO Y BOTÓN DE CONTROL DE MÚSICA -->
     <!-- AUDIO CON REPRODUCTOR COMPATIBLE -->
