@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensajes de Cariño - XV Tiana Ximena</title>
+    <!-- Fuentes elegantes -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0b1d13;
+            /* Utiliza la misma imagen de fondo de las luciérnagas */
+            background-image: linear-gradient(rgba(11, 29, 19, 0.82), rgba(11, 29, 19, 0.82)), url('img/fondo_itinerario.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #faf8f2;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .contenedor-principal {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* CABECERA */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 56px;
+            color: #d4e8b0;
+            text-shadow: 0 0 15px rgba(212, 232, 176, 0.6);
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 15px;
+            color: #c3d6a2;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* BOTÓN DE ACTUALIZAR */
+        .acciones {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .btn-recargar {
+            background-color: #3b4929;
+            color: #faf8f2;
+            border: 1px solid #c3d6a2;
+            padding: 10px 22px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-recargar:hover {
+            background-color: #506138;
+            transform: translateY(-2px);
+        }
+
+        /* GRID DE TARJETAS DE MENSAJES */
+        .muro-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 22px;
+        }
+
+        .tarjeta-mensaje {
+            background: rgba(255, 255, 255, 0.94);
+            color: #2a371c;
+            border: 2px solid #c3d6a2;
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            backdrop-filter: blur(4px);
+            transition: transform 0.3s ease;
+        }
+
+        .tarjeta-mensaje:hover {
+            transform: translateY(-4px);
+        }
+
+        .tarjeta-mensaje::before {
+            content: "💚";
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            font-size: 18px;
+        }
+
+        .nombre-familia {
+            font-weight: 600;
+            font-size: 16px;
+            color: #3b4929;
+            margin-bottom: 12px;
+            border-bottom: 1px dashed #c3d6a2;
+            padding-bottom: 8px;
+        }
+
+        .contenido-mensaje {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333333;
+            font-style: italic;
+            margin-bottom: 15px;
+            white-space: pre-wrap; /* Mantiene los saltos de línea del mensaje original */
+        }
+
+        .pie-tarjeta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: #777;
+            margin-top: 10px;
+        }
+
+        .badge-asistencia {
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+
+        .asistira {
+            background-color: #e2f0d9;
+            color: #2e5b1e;
+        }
+
+        .no-asistira {
+            background-color: #fce4d6;
+            color: #843c0c;
+        }
+
+        /* MENSAJE DE CARGA / ESTADOS */
+        .estado-carga {
+            text-align: center;
+            font-size: 16px;
+            color: #d4e8b0;
+            padding: 50px 0;
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="contenedor-principal">
+    <header>
+        <h1>Mensajes de Cariño</h1>
+        <p>Palabras de amor y buenos deseos para Tiana </p>
+    </header>
+
+    <div class="acciones">
+        <button class="btn-recargar" onclick="cargarMensajes()">🔄 Actualizar mensajes</button>
+    </div>
+
+    <!-- Muro dinámico -->
+    <div id="muroGrid" class="muro-grid">
+        <div id="estadoCarga" class="estado-carga">Cargando mensajes ... </div>
+    </div>
+</div>
+
+<script>
+    // Coloca tu URL de Google Apps Script entre las comillas
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzo0dF6tnoXuSlbVLvRIzKXMJ4I0gACkMzAKo2M1i4MtyRspzT_2aSn4JtGIvwki_73/exec";
+
+    function cargarMensajes() {
+        const contenedor = document.getElementById('muroGrid');
+        contenedor.innerHTML = '<div class="estado-carga">Cargando mensajes mágicos... </div>';
+
+        // Comprobación simple de presencia de URL
+        if (!SCRIPT_URL || SCRIPT_URL.includes("TU_URL_REAL_AQUI")) {
+            contenedor.innerHTML = `
+                <div class="estado-carga">
+                    <p>⚠️ Aún no se ha vinculado correctamente la URL de Google Sheets en la variable SCRIPT_URL.</p>
+                </div>
+            `;
+            return;
+        }
+
+        fetch(SCRIPT_URL)
+            .then(response => response.json())
+            .then(data => {
+                contenedor.innerHTML = '';
+
+                if (!data || data.length === 0) {
+                    contenedor.innerHTML = '<div class="estado-carga">Aún no hay mensajes registrados. 💌</div>';
+                    return;
+                }
+
+                data.reverse().forEach(item => {
+                    if (item.mensaje && item.mensaje.trim() !== "") {
+                        const tarjeta = document.createElement('div');
+                        tarjeta.className = 'tarjeta-mensaje';
+
+                        const respuestaAsistencia = (item.asistencia || '').toString().toLowerCase();
+                        const esSi = respuestaAsistencia.includes('si') || respuestaAsistencia.includes('sí');
+                        
+                        const claseBadge = esSi ? 'asistira' : 'no-asistira';
+                        const textoBadge = esSi ? 'Confirmado' : 'No asistirá';
+
+                        tarjeta.innerHTML = `
+                            <div>
+                                <div class="nombre-familia">${item.nombre || 'Invitado Especial'}</div>
+                                <div class="contenido-mensaje">"${item.mensaje}"</div>
+                            </div>
+                            <div class="pie-tarjeta">
+                                <span class="badge-asistencia ${claseBadge}">${textoBadge}</span>
+                            </div>
+                        `;
+
+                        contenedor.appendChild(tarjeta);
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error al cargar mensajes:', error);
+                contenedor.innerHTML = '<div class="estado-carga">Hubo un problema al conectar con Google Sheets. Revisa la consola o los permisos del script.</div>';
+            });
+    }
+
+    // Carga inicial al abrir la página
+    window.addEventListener('DOMContentLoaded', cargarMensajes);
+</script>
+
+
+</body>
+</html>
