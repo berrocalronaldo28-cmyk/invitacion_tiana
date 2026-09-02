@@ -1444,10 +1444,10 @@
 
 
 
-            <!-- CONFIRMACIÓN -->
+           <!-- CONFIRMACIÓN -->
         <section>
             <h2>Confirma tu asistencia</h2>
-            <p id="numeroAccesos">Tienes 1 acceso</p>
+            <p id="numeroAccesos">Tienes <span id="num-pases">1</span> <span id="texto-pases">acceso</span></p>
 
             <form id="formulario">
                 <!-- 1. Nombre de Familia (Conserva id="nombre") -->
@@ -1459,12 +1459,13 @@
                     <option value="no">No podré asistir</option>
                 </select>
 
-                <!-- 3. Mensaje de Cariño (Nuevo) -->
+                <!-- 3. Mensaje de Cariño -->
                 <textarea id="mensaje" rows="4" placeholder="Escribe aquí un mensaje de cariño para Tiana 💚..."></textarea>
 
                 <button type="submit">Confirmar</button>
             </form>
         </section>
+
 
 
     <script>
@@ -1629,41 +1630,64 @@
     </script>
 
     <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzo0dF6tnoXuSlbVLvRIzKXMJ4I0gACkMzAKo2M1i4MtyRspzT_2aSn4JtGIvwki_73/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzo0dF6tnoXuSlbVLvRIzKXMJ4I0gACkMzAKo2M1i4MtyRspzT_2aSn4JtGIvwki_73/exec';
 
-    document.getElementById('formulario').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const boton = this.querySelector('button[type="submit"]');
-        const textoOriginal = boton.textContent;
-        boton.disabled = true;
-        boton.textContent = 'Enviando confirmación...';
+        // 1. LECTURA DINÁMICA DE PASES AL CARGAR LA PÁGINA
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const pasesObtenidos = urlParams.get('pases') || '1';
+            
+            const elementoNum = document.getElementById('num-pases');
+            const elementoTexto = document.getElementById('texto-pases');
 
-        const datos = {
-            nombre: document.getElementById('nombre').value,
-            asistencia: document.getElementById('asistencia').value,
-            mensaje: document.getElementById('mensaje').value
-        };
+            if (elementoNum) {
+                elementoNum.textContent = pasesObtenidos;
+            }
 
-        fetch(SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(datos)
-        })
-        .then(() => {
-            alert('✨ ¡Muchas gracias! Tu confirmación y mensaje han sido enviados con éxito.');
-            document.getElementById('formulario').reset();
-            boton.disabled = false;
-            boton.textContent = textoOriginal;
-        })
-        .catch(error => {
-            alert('Hubo un problema al enviar la información. Por favor, intenta de nuevo.');
-            boton.disabled = false;
-            boton.textContent = textoOriginal;
+            if (elementoTexto) {
+                elementoTexto.textContent = (parseInt(pasesObtenidos) === 1) ? 'acceso' : 'accesos';
+            }
         });
-    });
-</script>
+
+        // 2. ENVÍO DEL FORMULARIO A GOOGLE SHEETS
+        document.getElementById('formulario').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const boton = this.querySelector('button[type="submit"]');
+            const textoOriginal = boton.textContent;
+            boton.disabled = true;
+            boton.textContent = 'Enviando confirmación...';
+
+            // Capturamos el número de pases actual que tiene en pantalla
+            const numPasesActual = document.getElementById('num-pases').textContent;
+
+            const datos = {
+                nombre: document.getElementById('nombre').value,
+                asistencia: document.getElementById('asistencia').value,
+                pases: numPasesActual,
+                mensaje: document.getElementById('mensaje').value
+            };
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datos)
+            })
+            .then(() => {
+                alert('✨ ¡Muchas gracias! Tu confirmación y mensaje han sido enviados con éxito.');
+                document.getElementById('formulario').reset();
+                boton.disabled = false;
+                boton.textContent = textoOriginal;
+            })
+            .catch(error => {
+                console.error('Error al enviar:', error);
+                alert('Hubo un problema al enviar la información. Por favor, intenta de nuevo.');
+                boton.disabled = false;
+                boton.textContent = textoOriginal;
+            });
+        });
+    </script>
 
 
 </body>
