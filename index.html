@@ -1444,10 +1444,9 @@
 
 
 
-           <!-- CONFIRMACIÓN -->
+          <!-- CONFIRMACIÓN -->
 <section>
     <h2>Confirma tu asistencia</h2>
-    <p id="numeroAccesos">Tienes <span id="accesos">1</span> <span id="texto-pases">acceso</span></p>
 
     <form id="formulario">
         <!-- 1. Nombre de Familia (Conserva id="nombre") -->
@@ -1472,23 +1471,10 @@
     function cargarDatosURL() {
         const urlParams = new URLSearchParams(window.location.search);
         
-        // 1. Leer parámetros ?familia=...&boletos=... de la URL
-        const boletosObtenidos = urlParams.get('boletos') || '1';
+        // Leer parámetro ?familia=... de la URL
         const familiaObtenida = urlParams.get('familia');
 
-        // 2. Actualizar el elemento span con id="accesos"
-        const elementoNum = document.getElementById('accesos');
-        const elementoTexto = document.getElementById('texto-pases');
-
-        if (elementoNum) {
-            elementoNum.textContent = boletosObtenidos;
-        }
-
-        if (elementoTexto) {
-            elementoTexto.textContent = (parseInt(boletosObtenidos) === 1) ? 'acceso' : 'accesos';
-        }
-
-        // 3. Rellenar de forma automática el campo Nombre si viene en la URL
+        // Rellenar de forma automática el campo Nombre si viene en la URL
         if (familiaObtenida) {
             const campoNombre = document.getElementById('nombre');
             if (campoNombre) {
@@ -1497,7 +1483,7 @@
         }
     }
 
-    // Ejecutar la carga inmediatamente al estar listo el DOM
+    // Ejecutar la carga al estar listo el DOM
     document.addEventListener('DOMContentLoaded', cargarDatosURL);
     cargarDatosURL();
 
@@ -1510,12 +1496,9 @@
         boton.disabled = true;
         boton.textContent = 'Enviando confirmación...';
 
-        const numBoletosActual = document.getElementById('accesos') ? document.getElementById('accesos').textContent : '1';
-
         const datos = {
             nombre: document.getElementById('nombre').value,
             asistencia: document.getElementById('asistencia').value,
-            pases: numBoletosActual,
             mensaje: document.getElementById('mensaje').value
         };
 
@@ -1539,7 +1522,6 @@
         });
     });
 </script>
-
 
 
     <script>
