@@ -1445,26 +1445,100 @@
 
 
            <!-- CONFIRMACIÓN -->
-        <section>
-            <h2>Confirma tu asistencia</h2>
-            <p id="numeroAccesos">Tienes <span id="accesos">1</span> <span id="texto-pases">acceso</span></p>
+<section>
+    <h2>Confirma tu asistencia</h2>
+    <p id="numeroAccesos">Tienes <span id="accesos">1</span> <span id="texto-pases">acceso</span></p>
 
-            <form id="formulario">
-                <!-- 1. Nombre de Familia (Conserva id="nombre") -->
-                <input type="text" id="nombre" placeholder="Nombre de Familia o Invitado" required>
+    <form id="formulario">
+        <!-- 1. Nombre de Familia (Conserva id="nombre") -->
+        <input type="text" id="nombre" placeholder="Nombre de Familia o Invitado" required>
 
-                <!-- 2. Asistencia (Conserva id="asistencia") -->
-                <select id="asistencia" required>
-                    <option value="si">Sí asistiré</option>
-                    <option value="no">No podré asistir</option>
-                </select>
+        <!-- 2. Asistencia (Conserva id="asistencia") -->
+        <select id="asistencia" required>
+            <option value="si">Sí asistiré</option>
+            <option value="no">No podré asistir</option>
+        </select>
 
-                <!-- 3. Mensaje de Cariño -->
-                <textarea id="mensaje" rows="4" placeholder="Escribe aquí un mensaje de cariño para Tiana 💚..."></textarea>
+        <!-- 3. Mensaje de Cariño -->
+        <textarea id="mensaje" rows="4" placeholder="Escribe aquí un mensaje de cariño para Tiana 💚..."></textarea>
 
-                <button type="submit">Confirmar</button>
-            </form>
-        </section>
+        <button type="submit">Confirmar</button>
+    </form>
+</section>
+
+<script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzo0dF6tnoXuSlbVLvRIzKXMJ4I0gACkMzAKo2M1i4MtyRspzT_2aSn4JtGIvwki_73/exec';
+
+    function cargarDatosURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // 1. Leer parámetros ?familia=...&boletos=... de la URL
+        const boletosObtenidos = urlParams.get('boletos') || '1';
+        const familiaObtenida = urlParams.get('familia');
+
+        // 2. Actualizar el elemento span con id="accesos"
+        const elementoNum = document.getElementById('accesos');
+        const elementoTexto = document.getElementById('texto-pases');
+
+        if (elementoNum) {
+            elementoNum.textContent = boletosObtenidos;
+        }
+
+        if (elementoTexto) {
+            elementoTexto.textContent = (parseInt(boletosObtenidos) === 1) ? 'acceso' : 'accesos';
+        }
+
+        // 3. Rellenar de forma automática el campo Nombre si viene en la URL
+        if (familiaObtenida) {
+            const campoNombre = document.getElementById('nombre');
+            if (campoNombre) {
+                campoNombre.value = decodeURIComponent(familiaObtenida);
+            }
+        }
+    }
+
+    // Ejecutar la carga inmediatamente al estar listo el DOM
+    document.addEventListener('DOMContentLoaded', cargarDatosURL);
+    cargarDatosURL();
+
+    // ENVÍO DEL FORMULARIO A GOOGLE SHEETS
+    document.getElementById('formulario').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const boton = this.querySelector('button[type="submit"]');
+        const textoOriginal = boton.textContent;
+        boton.disabled = true;
+        boton.textContent = 'Enviando confirmación...';
+
+        const numBoletosActual = document.getElementById('accesos') ? document.getElementById('accesos').textContent : '1';
+
+        const datos = {
+            nombre: document.getElementById('nombre').value,
+            asistencia: document.getElementById('asistencia').value,
+            pases: numBoletosActual,
+            mensaje: document.getElementById('mensaje').value
+        };
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datos)
+        })
+        .then(() => {
+            alert('✨ ¡Muchas gracias! Tu confirmación y mensaje han sido enviados con éxito.');
+            document.getElementById('formulario').reset();
+            boton.disabled = false;
+            boton.textContent = textoOriginal;
+        })
+        .catch(error => {
+            console.error('Error al enviar:', error);
+            alert('Hubo un problema al enviar la información. Por favor, intenta de nuevo.');
+            boton.disabled = false;
+            boton.textContent = textoOriginal;
+        });
+    });
+</script>
 
 
 
