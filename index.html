@@ -914,23 +914,23 @@
             .info-after-oculta {
                 max-height: 0;
                 overflow: hidden;
-                transition: max-height 0.4s ease-out, opacity 0.3s ease;
+                transition: max-height 0.5s ease-in-out, opacity 0.4s ease;
                 opacity: 0;
             }
 
             .info-after-oculta.desplegado {
-                max-height: 500px;
+                max-height: 1200px;
                 opacity: 1;
                 margin-top: 15px;
             }
 
             .detalles-after {
                 background: #faf8f2;
-                padding: 12px;
+                padding: 15px;
                 border-radius: 10px;
                 border: 1px solid #c3d6a2;
                 text-align: left;
-                font-size: 12px;
+                font-size: 13px;
                 color: #333;
             }
 
@@ -1089,71 +1089,42 @@
             background-color: #222d16;
         }
 
-        /* RECUADROS ELEGANTES PARA LAS FOTOS DEL AFTER */
+        /* CONTENEDOR FOTOS DEL AFTER */
         
         .tarjetas-fotos-after {
             display: flex;
             flex-direction: row;
             gap: 12px;
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 10px;
-            box-sizing: border-box;
-            justify-content: center;
             margin-top: 18px;
-            flex-wrap: wrap; /* Permite adaptarse en pantallas móviles */
-        }
-        /* Estilo responsivo para las imágenes */
-        .img-ubicacion {
-        width: 50%; /* Cada imagen ocupa la mitad en laptops */
-        max-width: 100%;
-        height: auto; /* Mantiene la proporción de aspecto */
-        border-radius: 8px;
-        object-fit: cover;
-        }
-
-        /* ====================================
-        MEDIA QUERY PARA CELULARES (Móviles)
-        ==================================== */
-        @media screen and (max-width: 768px) {
-        .imagenes-ubicacion {
-            flex-direction: column; /* Apila las imágenes verticalmente */
-            gap: 20px;
-        }
-
-        .img-ubicacion {
-            width: 100%; /* La imagen ocupa todo el ancho del celular */
-            max-height: 350px; /* Evita que ocupe demasiado alto vertical */
-            object-fit: cover;
-        }
-        }
-
-        .recuadro-foto {
-            background: #ffffff;
-            border: 2px solid #c3d6a2;
-            border-radius: 12px;
-            padding: 6px; /* Efecto marco/paspartú */
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-            flex: 1 1 180px;
-            max-width: 220px;
+            justify-content: center;
             box-sizing: border-box;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        .recuadro-foto:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
-        }
-
-        .recuadro-foto img {
+        
+                .recuadro-foto img {
             width: 100%;
-            height: 130px;
+            height: 160px;
             object-fit: cover;
             border-radius: 8px;
             display: block;
         }
-          
+        
+        /* ADAPTACIÓN EN DISPOSITIVOS MÓVILES */
+        @media screen and (max-width: 600px) {
+            .tarjetas-fotos-after {
+                flex-direction: column; /* Apila las fotos una debajo de otra */
+                gap: 15px;
+            }
+        
+            .recuadro-foto {
+                flex: 1 1 100%;
+                width: 100%;
+            }
+        
+            .recuadro-foto img {
+                height: 200px; /* Tamaño ideal en celulares */
+            }
+        }
     </style>
 </head>
 <body class="sobre-cerrado">
@@ -1639,9 +1610,9 @@
             /* MOSTRAR / OCULTAR DETALLES DEL AFTER */
             function toggleAfterInfo() {
                 const info = document.getElementById('info-after');
-                const contenedor = document.querySelector('.item-after');
+                const contenedor = document.querySelector('.tarjeta-after-party');
                 
-                if (info) {
+                if (info && contenedor) {
                     info.classList.toggle('desplegado');
                     contenedor.classList.toggle('activo');
                 }
