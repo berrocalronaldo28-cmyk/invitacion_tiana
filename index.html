@@ -1090,12 +1090,43 @@
         }
 
         /* RECUADROS ELEGANTES PARA LAS FOTOS DEL AFTER */
+        
         .tarjetas-fotos-after {
             display: flex;
+            flex-direction: row;
             gap: 12px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px;
+            box-sizing: border-box;
             justify-content: center;
             margin-top: 18px;
             flex-wrap: wrap; /* Permite adaptarse en pantallas móviles */
+        }
+        /* Estilo responsivo para las imágenes */
+        .img-ubicacion {
+        width: 50%; /* Cada imagen ocupa la mitad en laptops */
+        max-width: 100%;
+        height: auto; /* Mantiene la proporción de aspecto */
+        border-radius: 8px;
+        object-fit: cover;
+        }
+
+        /* ====================================
+        MEDIA QUERY PARA CELULARES (Móviles)
+        ==================================== */
+        @media screen and (max-width: 768px) {
+        .imagenes-ubicacion {
+            flex-direction: column; /* Apila las imágenes verticalmente */
+            gap: 20px;
+        }
+
+        .img-ubicacion {
+            width: 100%; /* La imagen ocupa todo el ancho del celular */
+            max-height: 350px; /* Evita que ocupe demasiado alto vertical */
+            object-fit: cover;
+        }
         }
 
         .recuadro-foto {
