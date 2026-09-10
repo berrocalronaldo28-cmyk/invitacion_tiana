@@ -1451,15 +1451,12 @@
 
 
     <script>
-        /* ====================================
+       /* ====================================
            INFORMACIÓN DE LA URL
         ==================================== */
         const parametros = new URLSearchParams(window.location.search);
         const nombreInvitado = parametros.get("nombre") || "Nuestra Celebración";
-        const accesos = parametros.get("accesos") || "1";
-
         document.getElementById("nombreInvitado").textContent = nombreInvitado;
-        document.getElementById("numeroAccesos").textContent = `Tienes ${accesos} acceso(s)`;
 
         /* ====================================
            CONFIRMACIÓN DE ASISTENCIA
@@ -1628,20 +1625,21 @@
 
         // 1. LECTURA DINÁMICA DE PASES AL CARGAR LA PÁGINA
         document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const pasesObtenidos = urlParams.get('pases') || '1';
-            
-            const elementoNum = document.getElementById('num-pases');
-            const elementoTexto = document.getElementById('texto-pases');
-
-            if (elementoNum) {
-                elementoNum.textContent = pasesObtenidos;
-            }
-
-            if (elementoTexto) {
-                elementoTexto.textContent = (parseInt(pasesObtenidos) === 1) ? 'acceso' : 'accesos';
-            }
-        });
+        const urlParams = new URLSearchParams(window.location.search);
+        // Detecta cualquiera de las 3 variables que venga en la URL
+        const pasesObtenidos = urlParams.get('pases') || urlParams.get('accesos') || urlParams.get('boletos') || '1';
+        
+        const elementoNum = document.getElementById('num-pases');
+        const elementoTexto = document.getElementById('texto-pases');
+    
+        if (elementoNum) {
+            elementoNum.textContent = pasesObtenidos;
+        }
+    
+        if (elementoTexto) {
+            elementoTexto.textContent = (parseInt(pasesObtenidos) === 1) ? 'acceso' : 'accesos';
+        }
+    });
 
         // 2. ENVÍO DEL FORMULARIO A GOOGLE SHEETS
         document.getElementById('formulario').addEventListener('submit', function(e) {
