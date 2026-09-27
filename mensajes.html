@@ -192,7 +192,6 @@
         const contenedor = document.getElementById('muroGrid');
         contenedor.innerHTML = '<div class="estado-carga">Cargando mensajes mágicos... </div>';
 
-        // Comprobación simple de presencia de URL
         if (!SCRIPT_URL || SCRIPT_URL.includes("TU_URL_REAL_AQUI")) {
             contenedor.innerHTML = `
                 <div class="estado-carga">
@@ -208,33 +207,36 @@
                 contenedor.innerHTML = '';
 
                 if (!data || data.length === 0) {
-                    contenedor.innerHTML = '<div class="estado-carga">Aún no hay mensajes registrados. 💌</div>';
+                    contenedor.innerHTML = '<div class="estado-carga">Aún no hay confirmaciones ni mensajes registrados. 💌</div>';
                     return;
                 }
 
                 data.reverse().forEach(item => {
-                    if (item.mensaje && item.mensaje.trim() !== "") {
-                        const tarjeta = document.createElement('div');
-                        tarjeta.className = 'tarjeta-mensaje';
+                    const tarjeta = document.createElement('div');
+                    tarjeta.className = 'tarjeta-mensaje';
 
-                        const respuestaAsistencia = (item.asistencia || '').toString().toLowerCase();
-                        const esSi = respuestaAsistencia.includes('si') || respuestaAsistencia.includes('sí');
-                        
-                        const claseBadge = esSi ? 'asistira' : 'no-asistira';
-                        const textoBadge = esSi ? 'Confirmado' : 'No asistirá';
+                    const respuestaAsistencia = (item.asistencia || '').toString().toLowerCase();
+                    const esSi = respuestaAsistencia.includes('si') || respuestaAsistencia.includes('sí');
+                    
+                    const claseBadge = esSi ? 'asistira' : 'no-asistira';
+                    const textoBadge = esSi ? 'Confirmado' : 'No asistirá';
 
-                        tarjeta.innerHTML = `
-                            <div>
-                                <div class="nombre-familia">${item.nombre || 'Invitado Especial'}</div>
-                                <div class="contenido-mensaje">"${item.mensaje}"</div>
-                            </div>
-                            <div class="pie-tarjeta">
-                                <span class="badge-asistencia ${claseBadge}">${textoBadge}</span>
-                            </div>
-                        `;
+                    // Si dejó mensaje lo muestra; si no, coloca un mensaje elegante por defecto
+                    const textoMensaje = (item.mensaje && item.mensaje.trim() !== "") 
+                        ? `"${item.mensaje}"` 
+                        : (esSi ? '✨ ¡Confirmó su asistencia a la fiesta!' : '✉️ Confirmó que no podrá asistir.');
 
-                        contenedor.appendChild(tarjeta);
-                    }
+                    tarjeta.innerHTML = `
+                        <div>
+                            <div class="nombre-familia">${item.nombre || 'Invitado Especial'}</div>
+                            <div class="contenido-mensaje">${textoMensaje}</div>
+                        </div>
+                        <div class="pie-tarjeta">
+                            <span class="badge-asistencia ${claseBadge}">${textoBadge}</span>
+                        </div>
+                    `;
+
+                    contenedor.appendChild(tarjeta);
                 });
             })
             .catch(error => {
