@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pase de Acceso - XV Tiana Ximena</title>
+    <title>Pase de Abordaje - XV Tiana Ximena</title>
     <!-- Fuentes elegantes -->
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Librería para convertir HTML a PDF directamente en el cliente -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Librería para convertir HTML a PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
@@ -32,7 +32,7 @@
             padding: 20px;
         }
 
-        /* Botón de descarga flotante / superior */
+        /* Botón de descarga */
         .contenedor-acciones {
             margin-bottom: 25px;
             text-align: center;
@@ -44,14 +44,16 @@
             border: 1px solid #c3d6a2;
             padding: 12px 26px;
             border-radius: 25px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .btn-descargar:hover {
@@ -60,46 +62,38 @@
             box-shadow: 0 6px 20px rgba(195, 214, 162, 0.3);
         }
 
-        /* TARJETA DEL BOLETO (ESTILO PASE DE FIESTA) */
+        /* TARJETA DEL BOLETO (ESTILO GALA) */
         .tarjeta-boleto {
             width: 100%;
             max-width: 420px;
-            background: rgba(255, 255, 255, 0.96);
+            background: rgba(255, 255, 255, 0.97);
             color: #1a2617;
             border: 2px solid #c3d6a2;
             border-radius: 20px;
-            padding: 30px 25px;
+            padding: 35px 25px 25px 25px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             position: relative;
             text-align: center;
             backdrop-filter: blur(5px);
         }
 
-        .tarjeta-boleto::before {
-            content: "💚";
-            position: absolute;
-            top: 15px;
-            left: 20px;
-            font-size: 20px;
-        }
-
-        .tarjeta-boleto::after {
-            content: "💚";
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 20px;
+        /* Ornamentos superiores elegantes (reemplazan a los emojis de estrellas) */
+        .ornamento-cabecera {
+            font-size: 12px;
+            color: #a4be7b;
+            letter-spacing: 6px;
+            margin-bottom: 8px;
         }
 
         .encabezado-boleto {
-            border-bottom: 2px dashed #c3d6a2;
-            padding-bottom: 15px;
+            border-bottom: 1px solid #d4e8b0;
+            padding-bottom: 18px;
             margin-bottom: 20px;
         }
 
         .etiqueta-admision {
-            font-size: 11px;
-            letter-spacing: 3px;
+            font-size: 10px;
+            letter-spacing: 4px;
             text-transform: uppercase;
             color: #506138;
             font-weight: 700;
@@ -107,30 +101,31 @@
 
         .titulo-evento {
             font-family: 'Great Vibes', cursive;
-            font-size: 42px;
+            font-size: 46px;
             color: #2b391a;
-            margin: 5px 0;
+            margin: 2px 0;
             line-height: 1.1;
         }
 
         .nombre-invitado {
-            font-size: 20px;
+            font-size: 19px;
             font-weight: 700;
-            color: #111;
-            margin-top: 10px;
+            color: #1a2617;
+            margin-top: 8px;
             text-transform: capitalize;
+            letter-spacing: 0.5px;
         }
 
         /* DETALLES DEL PASE */
         .detalles-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
             margin: 20px 0;
-            background: #f4f8ee;
-            padding: 15px;
+            background: #f6f9f2;
+            padding: 16px;
             border-radius: 12px;
-            border: 1px solid #d4e8b0;
+            border: 1px solid #e2ebd5;
         }
 
         .dato-box {
@@ -140,42 +135,60 @@
         }
 
         .dato-titulo {
-            font-size: 10px;
+            font-size: 9px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #666;
+            letter-spacing: 1.5px;
+            color: #667852;
             margin-bottom: 4px;
+            font-weight: 600;
         }
 
         .dato-valor {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 700;
-            color: #3b4929;
+            color: #2b391a;
         }
 
-        /* LUGAR Y FECHA */
+        /* SECCIÓN DE FECHA Y LUGAR CON ICONOS VECTORIALES */
         .info-evento {
-            margin: 15px 0;
+            margin: 20px 0;
             font-size: 13px;
             color: #444;
-            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-start;
+            padding: 0 10px;
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-align: left;
+        }
+
+        .icono-svg {
+            width: 16px;
+            height: 16px;
+            fill: #506138;
+            flex-shrink: 0;
         }
 
         .salon-nombre {
-            font-weight: 700;
+            font-weight: 600;
             color: #2a371c;
-            font-size: 15px;
-            margin-bottom: 3px;
         }
 
         /* PIE Y ADVERTENCIA */
         .pie-boleto {
-            border-top: 1px solid #e0e0e0;
+            border-top: 1px dashed #d4e8b0;
             padding-top: 15px;
             margin-top: 20px;
-            font-size: 11px;
+            font-size: 10.5px;
             color: #666;
-            font-style: italic;
+            line-height: 1.4;
+            letter-spacing: 0.2px;
         }
     </style>
 </head>
@@ -183,12 +196,15 @@
 
     <div class="contenedor-acciones">
         <button class="btn-descargar" onclick="descargarPDF()">
-             Descargar Boleto en PDF
+            <svg class="icono-svg" style="fill:#faf8f2;" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            Guardar Pase en PDF
         </button>
     </div>
 
-    <!-- ÁREA DEL BOLETO QUE SE CONVIERTE EN PDF -->
+    <!-- TARJETA PARA IMPRIMIR / DESCARGAR -->
     <div id="boletoImprimir" class="tarjeta-boleto">
+        <div class="ornamento-cabecera">✦ ✧ ✦</div>
+
         <div class="encabezado-boleto">
             <span class="etiqueta-admision">Pase Personal</span>
             <h1 class="titulo-evento">XV Años Tiana Ximena</h1>
@@ -207,42 +223,52 @@
         </div>
 
         <div class="info-evento">
-            <div class="salon-nombre">📍 Salón: Mirage</div>
-            <div>📅 Sábado, 21 de Noviembre</div>
-            <div>⏰ Recepción: 7:30 PM</div>
+            <div class="item-info">
+                <!-- Icono Salón / Ubicación -->
+                <svg class="icono-svg" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <span class="salon-nombre">Salón: La Olla y Joya</span>
+            </div>
+
+            <div class="item-info">
+                <!-- Icono Calendario -->
+                <svg class="icono-svg" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
+                <span>Sábado, 12 de Septiembre</span>
+            </div>
+
+            <div class="item-info">
+                <!-- Icono Reloj -->
+                <svg class="icono-svg" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                <span>Recepción: 7:00 PM</span>
+            </div>
         </div>
 
         <div class="pie-boleto">
-            Presente este boleto antes de ingresar al recinto
+            Favor de presentar este pase digital o impreso al ingresar al evento.
         </div>
     </div>
 
     <script>
-        // Cargar datos dinámicos desde los parámetros de la URL
         function cargarDatosBoleto() {
             const urlParams = new URLSearchParams(window.location.search);
 
-            // Lectura limpia con decodeURIComponent
             const familiaRaw = urlParams.get('familia') || 'Invitado Especial';
             const familia = decodeURIComponent(familiaRaw);
             
             const boletos = urlParams.get('boletos') || '1';
             const mesa = urlParams.get('mesa') || 'Por asignar';
 
-            // Inserción en los elementos del HTML
             document.getElementById('lblFamilia').textContent = familia;
-            document.getElementById('lblBoletos').textContent = boletos + (parseInt(boletos) === 1 ? ' Invitado' : ' Invitados');
+            document.getElementById('lblBoletos').textContent = boletos + (parseInt(boletos) === 1 ? ' Pase' : ' Pases');
             document.getElementById('lblMesa').textContent = mesa.toLowerCase().includes('mesa') ? mesa : 'Mesa ' + mesa;
         }
 
-        // Función para generar y descargar el PDF de forma limpia en móviles y PC
         function descargarPDF() {
             const elemento = document.getElementById('boletoImprimir');
             const nombreInvitado = document.getElementById('lblFamilia').textContent.replace(/\s+/g, '_');
 
             const opciones = {
                 margin:       [10, 10, 10, 10],
-                filename:     `Boleto_XV_Tiana_${nombreInvitado}.pdf`,
+                filename:     `Pase_XV_Tiana_${nombreInvitado}.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: 2, useCORS: true },
                 jsPDF:        { unit: 'mm', format: 'a5', orientation: 'portrait' }
