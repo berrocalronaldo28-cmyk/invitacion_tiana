@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pase de Entrada - XV Tiana Ximena</title>
+    <title>Boleto de entrada - XV Tiana Ximena</title>
     <!-- Fuentes elegantes -->
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Librería para convertir HTML a PDF -->
@@ -66,7 +66,6 @@
         .tarjeta-boleto {
             width: 100%;
             max-width: 420px;
-            /* Fondo con patrón de líneas verticales verdes finas */
             background-color: #f7faf4;
             background-image: repeating-linear-gradient(
                 90deg,
@@ -78,21 +77,19 @@
             color: #1a2617;
             border: 2px solid #a4be7b;
             border-radius: 20px;
-            padding: 35px 25px 25px 25px;
+            padding: 25px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             position: relative;
             text-align: center;
         }
 
-        /* Marcador de borde interior sutil */
         .marco-interior {
             border: 1px solid rgba(80, 97, 56, 0.25);
             border-radius: 14px;
             padding: 20px 15px;
-            background: rgba(255, 255, 255, 0.82);
+            background: rgba(255, 255, 255, 0.85);
         }
 
-        /* Ornamentos superiores elegantes */
         .ornamento-cabecera {
             font-size: 12px;
             color: #506138;
@@ -164,14 +161,14 @@
             color: #2b391a;
         }
 
-        /* SECCIÓN DE FECHA Y LUGAR CON ICONOS VECTORIALES */
+        /* SECCIÓN DE FECHA Y LUGAR */
         .info-evento {
             margin: 20px 0;
             font-size: 13px;
             color: #333;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             align-items: flex-start;
             padding: 0 10px;
         }
@@ -184,10 +181,11 @@
         }
 
         .icono-svg {
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             fill: #506138;
             flex-shrink: 0;
+            display: inline-block;
         }
 
         .salon-nombre {
@@ -195,7 +193,6 @@
             color: #2a371c;
         }
 
-        /* PIE Y ADVERTENCIA */
         .pie-boleto {
             border-top: 1px dashed #c3d6a2;
             padding-top: 15px;
@@ -211,18 +208,18 @@
 
     <div class="contenedor-acciones">
         <button class="btn-descargar" onclick="descargarPDF()">
-            <svg class="icono-svg" style="fill:#faf8f2;" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            <svg class="icono-svg" width="18" height="18" style="fill:#faf8f2;" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
             Guardar Pase en PDF
         </button>
     </div>
 
-    <!-- TARJETA PARA IMPRIMIR / DESCARGAR CON LÍNEAS DE FONDO Y MARCO -->
+    <!-- TARJETA PARA IMPRIMIR / DESCARGAR -->
     <div id="boletoImprimir" class="tarjeta-boleto">
         <div class="marco-interior">
             <div class="ornamento-cabecera">✦ ✧ ✦</div>
 
             <div class="encabezado-boleto">
-                <span class="etiqueta-admision">Boleto de acceso</span>
+                <span class="etiqueta-admision">Pase Personal</span>
                 <h1 class="titulo-evento">XV Años Tiana Ximena</h1>
                 <div id="lblFamilia" class="nombre-invitado">Cargando...</div>
             </div>
@@ -240,20 +237,20 @@
 
             <div class="info-evento">
                 <div class="item-info">
-                    <!-- Icono Salón / Ubicación -->
-                    <svg class="icono-svg" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    <!-- Icono Salón con ancho/alto explícitos -->
+                    <svg class="icono-svg" width="18" height="18" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                     <span class="salon-nombre">Salón: Mirage</span>
                 </div>
 
                 <div class="item-info">
-                    <!-- Icono Calendario -->
-                    <svg class="icono-svg" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
+                    <!-- Icono Calendario con ancho/alto explícitos -->
+                    <svg class="icono-svg" width="18" height="18" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
                     <span>Sábado, 21 de Noviembre</span>
                 </div>
 
                 <div class="item-info">
-                    <!-- Icono Reloj -->
-                    <svg class="icono-svg" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                    <!-- Icono Reloj con ancho/alto explícitos -->
+                    <svg class="icono-svg" width="18" height="18" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
                     <span>Recepción: 7:30 PM</span>
                 </div>
             </div>
@@ -287,10 +284,11 @@
                 margin:       [10, 10, 10, 10],
                 filename:     `Pase_XV_Tiana_${nombreInvitado}.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true },
+                html2canvas:  { scale: 2, useCORS: true, logging: false },
                 jsPDF:        { unit: 'mm', format: 'a5', orientation: 'portrait' }
             };
 
+            // Ejecuta el renderizado garantizando la captura de vectoriales SVG
             html2pdf().set(opciones).from(elemento).save();
         }
 
