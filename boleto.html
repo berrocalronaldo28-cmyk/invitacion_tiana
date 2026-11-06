@@ -62,31 +62,46 @@
             box-shadow: 0 6px 20px rgba(195, 214, 162, 0.3);
         }
 
-        /* TARJETA DEL BOLETO (ESTILO GALA) */
+        /* TARJETA DEL BOLETO CON LÍNEAS VERTICALES DE FONDO */
         .tarjeta-boleto {
             width: 100%;
             max-width: 420px;
-            background: rgba(255, 255, 255, 0.97);
+            /* Fondo con patrón de líneas verticales verdes finas */
+            background-color: #f7faf4;
+            background-image: repeating-linear-gradient(
+                90deg,
+                #f7faf4,
+                #f7faf4 12px,
+                #ebf2e4 12px,
+                #ebf2e4 14px
+            );
             color: #1a2617;
-            border: 2px solid #c3d6a2;
+            border: 2px solid #a4be7b;
             border-radius: 20px;
             padding: 35px 25px 25px 25px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             position: relative;
             text-align: center;
-            backdrop-filter: blur(5px);
+        }
+
+        /* Marcador de borde interior sutil */
+        .marco-interior {
+            border: 1px solid rgba(80, 97, 56, 0.25);
+            border-radius: 14px;
+            padding: 20px 15px;
+            background: rgba(255, 255, 255, 0.82);
         }
 
         /* Ornamentos superiores elegantes */
         .ornamento-cabecera {
             font-size: 12px;
-            color: #a4be7b;
+            color: #506138;
             letter-spacing: 6px;
             margin-bottom: 8px;
         }
 
         .encabezado-boleto {
-            border-bottom: 1px solid #d4e8b0;
+            border-bottom: 1px solid #c3d6a2;
             padding-bottom: 18px;
             margin-bottom: 20px;
         }
@@ -122,10 +137,10 @@
             grid-template-columns: 1fr 1fr;
             gap: 12px;
             margin: 20px 0;
-            background: #f6f9f2;
+            background: rgba(235, 242, 228, 0.9);
             padding: 16px;
             border-radius: 12px;
-            border: 1px solid #e2ebd5;
+            border: 1px solid #c3d6a2;
         }
 
         .dato-box {
@@ -138,9 +153,9 @@
             font-size: 9px;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            color: #667852;
+            color: #506138;
             margin-bottom: 4px;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .dato-valor {
@@ -153,7 +168,7 @@
         .info-evento {
             margin: 20px 0;
             font-size: 13px;
-            color: #444;
+            color: #333;
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -182,11 +197,11 @@
 
         /* PIE Y ADVERTENCIA */
         .pie-boleto {
-            border-top: 1px dashed #d4e8b0;
+            border-top: 1px dashed #c3d6a2;
             padding-top: 15px;
             margin-top: 20px;
             font-size: 10.5px;
-            color: #666;
+            color: #555;
             line-height: 1.4;
             letter-spacing: 0.2px;
         }
@@ -201,49 +216,51 @@
         </button>
     </div>
 
-    <!-- TARJETA PARA IMPRIMIR / DESCARGAR -->
+    <!-- TARJETA PARA IMPRIMIR / DESCARGAR CON LÍNEAS DE FONDO Y MARCO -->
     <div id="boletoImprimir" class="tarjeta-boleto">
-        <div class="ornamento-cabecera">✦ ✧ ✦</div>
+        <div class="marco-interior">
+            <div class="ornamento-cabecera">✦ ✧ ✦</div>
 
-        <div class="encabezado-boleto">
-            <span class="etiqueta-admision">Pase Personal</span>
-            <h1 class="titulo-evento">XV Años Tiana Ximena</h1>
-            <div id="lblFamilia" class="nombre-invitado">Cargando...</div>
-        </div>
-
-        <div class="detalles-grid">
-            <div class="dato-box">
-                <span class="dato-titulo">Accesos</span>
-                <span id="lblBoletos" class="dato-valor">1</span>
-            </div>
-            <div class="dato-box">
-                <span class="dato-titulo">Mesa Asignada</span>
-                <span id="lblMesa" class="dato-valor">Mesa 1</span>
-            </div>
-        </div>
-
-        <div class="info-evento">
-            <div class="item-info">
-                <!-- Icono Salón / Ubicación -->
-                <svg class="icono-svg" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                <span class="salon-nombre">Salón: La Olla y Joya</span>
+            <div class="encabezado-boleto">
+                <span class="etiqueta-admision">Boleto de acceso</span>
+                <h1 class="titulo-evento">XV Años Tiana Ximena</h1>
+                <div id="lblFamilia" class="nombre-invitado">Cargando...</div>
             </div>
 
-            <div class="item-info">
-                <!-- Icono Calendario -->
-                <svg class="icono-svg" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
-                <span>Sábado, 12 de Septiembre</span>
+            <div class="detalles-grid">
+                <div class="dato-box">
+                    <span class="dato-titulo">Accesos</span>
+                    <span id="lblBoletos" class="dato-valor">1</span>
+                </div>
+                <div class="dato-box">
+                    <span class="dato-titulo">Mesa Asignada</span>
+                    <span id="lblMesa" class="dato-valor">Mesa 1</span>
+                </div>
             </div>
 
-            <div class="item-info">
-                <!-- Icono Reloj -->
-                <svg class="icono-svg" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-                <span>Recepción: 7:00 PM</span>
-            </div>
-        </div>
+            <div class="info-evento">
+                <div class="item-info">
+                    <!-- Icono Salón / Ubicación -->
+                    <svg class="icono-svg" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    <span class="salon-nombre">Salón: Mirage</span>
+                </div>
 
-        <div class="pie-boleto">
-            Favor de presentar este pase digital o impreso al ingresar al evento.
+                <div class="item-info">
+                    <!-- Icono Calendario -->
+                    <svg class="icono-svg" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
+                    <span>Sábado, 21 de Noviembre</span>
+                </div>
+
+                <div class="item-info">
+                    <!-- Icono Reloj -->
+                    <svg class="icono-svg" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                    <span>Recepción: 7:30 PM</span>
+                </div>
+            </div>
+
+            <div class="pie-boleto">
+                Favor de presentar este boleto antes de entrar al recinto.
+            </div>
         </div>
     </div>
 
