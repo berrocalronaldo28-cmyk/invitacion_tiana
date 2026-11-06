@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pase de Abordaje - XV Tiana Ximena</title>
+    <!-- Fuentes elegantes -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Librería para convertir HTML a PDF directamente en el cliente -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0b1d13;
+            background-image: linear-gradient(rgba(11, 29, 19, 0.85), rgba(11, 29, 19, 0.85)), url('img/fondo_itinerario.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #faf8f2;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Botón de descarga flotante / superior */
+        .contenedor-acciones {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .btn-descargar {
+            background: linear-gradient(135deg, #506138, #3b4929);
+            color: #faf8f2;
+            border: 1px solid #c3d6a2;
+            padding: 12px 26px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-descargar:hover {
+            background: linear-gradient(135deg, #627745, #455630);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(195, 214, 162, 0.3);
+        }
+
+        /* TARJETA DEL BOLETO (ESTILO PASE DE FIESTA) */
+        .tarjeta-boleto {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(255, 255, 255, 0.96);
+            color: #1a2617;
+            border: 2px solid #c3d6a2;
+            border-radius: 20px;
+            padding: 30px 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            position: relative;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .tarjeta-boleto::before {
+            content: "✨";
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 20px;
+        }
+
+        .tarjeta-boleto::after {
+            content: "✨";
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 20px;
+        }
+
+        .encabezado-boleto {
+            border-bottom: 2px dashed #c3d6a2;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .etiqueta-admision {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #506138;
+            font-weight: 700;
+        }
+
+        .titulo-evento {
+            font-family: 'Great Vibes', cursive;
+            font-size: 42px;
+            color: #2b391a;
+            margin: 5px 0;
+            line-height: 1.1;
+        }
+
+        .nombre-invitado {
+            font-size: 20px;
+            font-weight: 700;
+            color: #111;
+            margin-top: 10px;
+            text-transform: capitalize;
+        }
+
+        /* DETALLES DEL PASE */
+        .detalles-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+            background: #f4f8ee;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #d4e8b0;
+        }
+
+        .dato-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .dato-titulo {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .dato-valor {
+            font-size: 18px;
+            font-weight: 700;
+            color: #3b4929;
+        }
+
+        /* LUGAR Y FECHA */
+        .info-evento {
+            margin: 15px 0;
+            font-size: 13px;
+            color: #444;
+            line-height: 1.5;
+        }
+
+        .salon-nombre {
+            font-weight: 700;
+            color: #2a371c;
+            font-size: 15px;
+            margin-bottom: 3px;
+        }
+
+        /* PIE Y ADVERTENCIA */
+        .pie-boleto {
+            border-top: 1px solid #e0e0e0;
+            padding-top: 15px;
+            margin-top: 20px;
+            font-size: 11px;
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor-acciones">
+        <button class="btn-descargar" onclick="descargarPDF()">
+            📥 Descargar Boleto en PDF
+        </button>
+    </div>
+
+    <!-- ÁREA DEL BOLETO QUE SE CONVIERTE EN PDF -->
+    <div id="boletoImprimir" class="tarjeta-boleto">
+        <div class="encabezado-boleto">
+            <span class="etiqueta-admision">Pase Personal</span>
+            <h1 class="titulo-evento">XV Años Tiana Ximena</h1>
+            <div id="lblFamilia" class="nombre-invitado">Cargando...</div>
+        </div>
+
+        <div class="detalles-grid">
+            <div class="dato-box">
+                <span class="dato-titulo">Accesos</span>
+                <span id="lblBoletos" class="dato-valor">1</span>
+            </div>
+            <div class="dato-box">
+                <span class="dato-titulo">Mesa Assigned</span>
+                <span id="lblMesa" class="dato-valor">Mesa 1</span>
+            </div>
+        </div>
+
+        <div class="info-evento">
+            <div class="salon-nombre">📍 Salón: La Olla y Joya</div>
+            <div>📅 Sábado, 12 de Septiembre</div>
+            <div>⏰ Recepción: 7:00 PM</div>
+        </div>
+
+        <div class="pie-boleto">
+            Importante: Deberá presentar este pase digital o impreso el día del evento para ingresar.[cite: 3]
+        </div>
+    </div>
+
+    <script>
+        // Cargar datos dinámicos desde los parámetros de la URL
+        function cargarDatosBoleto() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // Lectura limpia con decodeURIComponent
+            const familiaRaw = urlParams.get('familia') || 'Invitado Especial';
+            const familia = decodeURIComponent(familiaRaw);
+            
+            const boletos = urlParams.get('boletos') || '1';
+            const mesa = urlParams.get('mesa') || 'Por asignar';
+
+            // Inserción en los elementos del HTML
+            document.getElementById('lblFamilia').textContent = familia;
+            document.getElementById('lblBoletos').textContent = boletos + (parseInt(boletos) === 1 ? ' Invitado' : ' Invitados');
+            document.getElementById('lblMesa').textContent = mesa.toLowerCase().includes('mesa') ? mesa : 'Mesa ' + mesa;
+        }
+
+        // Función para generar y descargar el PDF de forma limpia en móviles y PC
+        function descargarPDF() {
+            const elemento = document.getElementById('boletoImprimir');
+            const nombreInvitado = document.getElementById('lblFamilia').textContent.replace(/\s+/g, '_');
+
+            const opciones = {
+                margin:       [10, 10, 10, 10],
+                filename:     `Boleto_XV_Tiana_${nombreInvitado}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a5', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opciones).from(elemento).save();
+        }
+
+        window.addEventListener('DOMContentLoaded', cargarDatosBoleto);
+    </script>
+</body>
+</html>
